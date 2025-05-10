@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="DemonicBot.Views.ChannelsPage"
+    xmlns:viewmodels="clr-namespace:DemonicBot.ViewModels"
+    xmlns:models="clr-namespace:DemonicBot.Models"
+    Title="{Binding Title}"
+    Style="{StaticResource DiscordPage}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ChannelsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Zurück" Command="{Binding GoBackCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <!-- Header -->
+        <Label Text="Kanal auswählen" Style="{StaticResource HeaderLabel}" Margin="0,10,0,10" />
+
+        <!-- Kanal-Liste -->
+        <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
+            <CollectionView
+                ItemsSource="{Binding Channels}"
+                SelectedItem="{Binding SelectedChannel}"
+                SelectionMode="Single">
+
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label 
+                            Text="Keine Kanäle gefunden" 
+                            Style="{StaticResource TitleLabel}"
+                            HorizontalOptions="Center" />
+                        <Label 
+                            Text="In diesem Server wurden keine Textkanäle gefunden."
+                            Style="{StaticResource SubtitleLabel}"
+                            HorizontalOptions="Center" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DiscordChannel">
+                        <Frame Style="{StaticResource CardFrame}" Margin="0,5" Padding="15">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <!-- Kanal-Icon -->
+                                <Image 
+                                    Source="channel_icon.png"
+                                    HeightRequest="24"
+                                    WidthRequest="24"
+                                    VerticalOptions="Center" />
+
+                                <!-- Kanal-Name -->
+                                <Label 
+                                    Grid.Column="1" 
+                                    Text="{Binding DisplayName}" 
+                                    Style="{StaticResource TitleLabel}"
+                                    VerticalOptions="Center"
+                                    Margin="15,0,0,0" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Fehlermeldung -->
+        <Label 
+            Grid.Row="2" 
+            Text="{Binding ErrorMessage}" 
+            TextColor="{StaticResource DiscordRed}" 
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyToBoolConverter}}"
+            Margin="0,10,0,0" />
+    </Grid>
+</ContentPage>

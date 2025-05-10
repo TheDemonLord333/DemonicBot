@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="DemonicBot.Views.LoginPage"
+    xmlns:viewmodels="clr-namespace:DemonicBot.ViewModels"
+    Title="{Binding Title}"
+    Style="{StaticResource DiscordPage}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,*" Padding="20">
+        <!-- Header -->
+        <Image Grid.ColumnSpan="2" 
+               Source="discord_logo.png" 
+               HeightRequest="120" 
+               HorizontalOptions="Center"
+               Margin="0,40,0,20" />
+
+        <Label Grid.Row="0" Grid.ColumnSpan="2"
+               Text="Discord Bot App"
+               FontSize="24"
+               TextColor="{StaticResource DiscordTextBrighter}"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Margin="0,160,0,0" />
+
+        <!-- Eingabefelder -->
+        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="15" Margin="0,30,0,0">
+            <Label Text="API URL" Style="{StaticResource TitleLabel}" />
+            <Entry Placeholder="http://deine-server-ip:3000" 
+                   Text="{Binding ApiUrl}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <Label Text="API Schlüssel" Style="{StaticResource TitleLabel}" Margin="0,10,0,0" />
+            <Entry Placeholder="Dein geheimer API-Schlüssel" 
+                   Text="{Binding ApiSecret}"
+                   IsPassword="True"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <Label Text="Benutzername (optional)" Style="{StaticResource TitleLabel}" Margin="0,10,0,0" />
+            <Entry Placeholder="Dein Benutzername" 
+                   Text="{Binding UserName}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="{StaticResource DiscordRed}" 
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyToBoolConverter}}"
+                   Margin="0,10,0,0" />
+        </VerticalStackLayout>
+
+        <!-- Login-Button -->
+        <Button Grid.Row="2" Grid.ColumnSpan="2"
+                Text="Anmelden"
+                Command="{Binding LoginCommand}"
+                Style="{StaticResource PrimaryButton}"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                Margin="0,20,0,0" />
+
+        <!-- Lade-Indikator -->
+        <ActivityIndicator Grid.Row="2" Grid.ColumnSpan="2"
+                          IsRunning="{Binding IsBusy}"
+                          IsVisible="{Binding IsBusy}"
+                          Color="{StaticResource DiscordBlurple}"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center"
+                          Margin="0,20,0,0" />
+    </Grid>
+</ContentPage>

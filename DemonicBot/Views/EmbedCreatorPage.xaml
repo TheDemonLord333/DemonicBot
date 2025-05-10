@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="DemonicBot.Views.EmbedCreatorPage"
+    xmlns:viewmodels="clr-namespace:DemonicBot.ViewModels"
+    xmlns:models="clr-namespace:DemonicBot.Models"
+    Title="{Binding Title}"
+    Style="{StaticResource DiscordPage}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:EmbedCreatorViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Zurück" Command="{Binding GoBackCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+              ColumnDefinitions="*,*" 
+              Padding="20" 
+              RowSpacing="15">
+
+            <!-- Header -->
+            <Label Grid.ColumnSpan="2" 
+                   Text="Embed-Nachricht erstellen" 
+                   Style="{StaticResource HeaderLabel}" />
+
+            <Label Grid.Row="1" Grid.ColumnSpan="2"
+                   Text="{Binding ChannelName, StringFormat='Senden an #{0}'}"
+                   Style="{StaticResource SubtitleLabel}"
+                   Margin="0,-10,0,0" />
+
+            <!-- Titel -->
+            <Label Grid.Row="2" Grid.ColumnSpan="2"
+                   Text="Titel" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Entry Grid.Row="3" Grid.ColumnSpan="2"
+                   Placeholder="Gib einen Titel ein"
+                   Text="{Binding EmbedTitle}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <!-- Beschreibung -->
+            <Label Grid.Row="4" Grid.ColumnSpan="2"
+                   Text="Beschreibung" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Editor Grid.Row="5" Grid.ColumnSpan="2"
+                    Placeholder="Gib eine Beschreibung ein"
+                    Text="{Binding EmbedDescription}"
+                    Style="{StaticResource DiscordEditor}"
+                    HeightRequest="120" />
+
+            <!-- Farbe -->
+            <Label Grid.Row="6" Grid.Column="0"
+                   Text="Farbe" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Picker Grid.Row="6" Grid.Column="1"
+                    ItemsSource="{Binding AvailableColors}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+                    BackgroundColor="{StaticResource DiscordBackgroundLighter}"
+                    TextColor="{StaticResource DiscordText}"
+                    TitleColor="{StaticResource DiscordTextDarker}" />
+
+            <!-- Bild URL -->
+            <Label Grid.Row="7" Grid.ColumnSpan="2"
+                   Text="Bild URL (optional)" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Entry Grid.Row="8" Grid.ColumnSpan="2"
+                   Placeholder="URL zu einem Bild"
+                   Text="{Binding ImageUrl}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <!-- Thumbnail URL -->
+            <Label Grid.Row="9" Grid.Column="0"
+                   Text="Thumbnail URL (optional)" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Entry Grid.Row="9" Grid.Column="1"
+                   Placeholder="URL zu einem Thumbnail"
+                   Text="{Binding ThumbnailUrl}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <!-- Footer Text -->
+            <Label Grid.Row="10" Grid.Column="0"
+                   Text="Footer Text (optional)" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Entry Grid.Row="10" Grid.Column="1"
+                   Placeholder="Footer Text"
+                   Text="{Binding FooterText}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <!-- Zeitstempel -->
+            <Label Grid.Row="11" Grid.Column="0"
+                   Text="Zeitstempel hinzufügen" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Switch Grid.Row="11" Grid.Column="1"
+                    IsToggled="{Binding IncludeTimestamp}"
+                    HorizontalOptions="Start"
+                    OnColor="{StaticResource DiscordBlurple}" />
+
+            <!-- Felder -->
+            <Label Grid.Row="12" Grid.ColumnSpan="2"
+                   Text="Felder" 
+                   Style="{StaticResource TitleLabel}" />
+
+            <Button Grid.Row="12" Grid.Column="1"
+                    Text="Feld hinzufügen"
+                    Command="{Binding AddFieldCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    HorizontalOptions="End" />
+
+            <CollectionView Grid.Row="13" Grid.ColumnSpan="2"
+                            ItemsSource="{Binding Fields}"
+                            SelectionMode="None"
+                            HeightRequest="{Binding Fields.Count, Converter={StaticResource CollectionCountToHeightConverter}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:EmbedField">
+                        <Frame Style="{StaticResource CardFrame}" Margin="0,5" Padding="15">
+                            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+                                <Entry Placeholder="Feldname"
+                                       Text="{Binding Name}"
+                                       Style="{StaticResource DiscordEntry}" />
+
+                                <Editor Grid.Row="1" Grid.Column="0"
+                                        Placeholder="Feldinhalt"
+                                        Text="{Binding Value}"
+                                        Style="{StaticResource DiscordEditor}"
+                                        HeightRequest="80" />
+
+                                <Button Grid.Row="0" Grid.Column="1"
+                                        Text="Entfernen"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:EmbedCreatorViewModel}}, Path=RemoveFieldCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Style="{StaticResource DangerButton}" />
+
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="Inline-Anzeige"
+                                       Style="{StaticResource SubtitleLabel}" />
+
+                                <Switch Grid.Row="2" Grid.Column="1"
+                                        IsToggled="{Binding Inline}"
+                                        HorizontalOptions="Start"
+                                        OnColor="{StaticResource DiscordBlurple}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Vorschau -->
+            <Label Grid.Row="14" Grid.ColumnSpan="2"
+                   Text="Vorschau" 
+                   Style="{StaticResource HeaderLabel}" />
+
+            <Frame Grid.Row="15" Grid.ColumnSpan="2"
+                   Style="{StaticResource CardFrame}"
+                   BorderColor="{Binding SelectedColor}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{Binding PreviewTitle}"
+                           Style="{StaticResource TitleLabel}"
+                           TextColor="{StaticResource DiscordTextBrighter}" />
+
+                    <Label Text="{Binding PreviewDescription}"
+                           Style="{StaticResource BaseLabel}" />
+
+                    <Label Text="{Binding FooterText}"
+                           Style="{StaticResource SubtitleLabel}"
+                           IsVisible="{Binding FooterText, Converter={StaticResource StringNotEmptyToBoolConverter}}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Fehlermeldung -->
+            <Label Grid.Row="16" Grid.ColumnSpan="2"
+                   Text="{Binding ErrorMessage}"
+                   TextColor="{StaticResource DiscordRed}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyToBoolConverter}}" />
+
+            <!-- Senden-Button -->
+            <Button Grid.Row="17" Grid.ColumnSpan="2"
+                    Text="Embed senden"
+                    Command="{Binding SendEmbedCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Margin="0,20,0,20" />
+
+            <!-- Lade-Indikator -->
+            <ActivityIndicator Grid.Row="17" Grid.ColumnSpan="2"
+                              IsRunning="{Binding IsBusy}"
+                              IsVisible="{Binding IsBusy}"
+                              Color="{StaticResource DiscordBlurple}" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

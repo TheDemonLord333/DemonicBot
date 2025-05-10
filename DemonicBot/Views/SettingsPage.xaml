@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="DemonicBot.Views.SettingsPage"
+    xmlns:viewmodels="clr-namespace:DemonicBot.ViewModels"
+    Title="{Binding Title}"
+    Style="{StaticResource DiscordPage}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:SettingsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Zurück" Command="{Binding GoBackCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,*" Padding="20">
+        <!-- Header -->
+        <Label Grid.ColumnSpan="2" 
+               Text="Einstellungen" 
+               Style="{StaticResource HeaderLabel}" />
+
+        <!-- Einstellungen -->
+        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="15" Margin="0,10,0,0">
+            <Label Text="API URL" Style="{StaticResource TitleLabel}" />
+            <Entry Placeholder="http://deine-server-ip:3000" 
+                   Text="{Binding ApiUrl}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <Label Text="API Schlüssel" Style="{StaticResource TitleLabel}" Margin="0,10,0,0" />
+            <Entry Placeholder="Dein geheimer API-Schlüssel" 
+                   Text="{Binding ApiSecret}"
+                   IsPassword="True"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <Label Text="Benutzername" Style="{StaticResource TitleLabel}" Margin="0,10,0,0" />
+            <Entry Placeholder="Dein Benutzername" 
+                   Text="{Binding UserName}"
+                   Style="{StaticResource DiscordEntry}" />
+
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="{StaticResource DiscordRed}" 
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyToBoolConverter}}"
+                   Margin="0,20,0,0" />
+        </VerticalStackLayout>
+
+        <!-- Buttons -->
+        <Button Grid.Row="2" Grid.Column="0"
+                Text="Speichern"
+                Command="{Binding SaveCommand}"
+                Style="{StaticResource PrimaryButton}"
+                Margin="0,0,5,0" />
+
+        <Button Grid.Row="2" Grid.Column="1"
+                Text="Abmelden"
+                Command="{Binding LogoutCommand}"
+                Style="{StaticResource DangerButton}"
+                Margin="5,0,0,0" />
+
+        <!-- Lade-Indikator -->
+        <ActivityIndicator Grid.Row="2" Grid.ColumnSpan="2"
+                          IsRunning="{Binding IsBusy}"
+                          IsVisible="{Binding IsBusy}"
+                          Color="{StaticResource DiscordBlurple}"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Discord ähnliche Stile -->
+
+    <!-- Label Stile -->
+    <Style TargetType="Label" x:Key="BaseLabel">
+        <Setter Property="TextColor" Value="{StaticResource DiscordText}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="HeaderLabel" BasedOn="{StaticResource BaseLabel}">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource DiscordTextBrighter}" />
+        <Setter Property="Margin" Value="0,10,0,5" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TitleLabel" BasedOn="{StaticResource BaseLabel}">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource DiscordTextBrighter}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SubtitleLabel" BasedOn="{StaticResource BaseLabel}">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource DiscordTextDarker}" />
+    </Style>
+
+    <!-- Button Stile -->
+    <Style TargetType="Button" x:Key="PrimaryButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBlurple}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="OpenSansSemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="SecondaryButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBackgroundLighter}" />
+        <Setter Property="TextColor" Value="{StaticResource DiscordText}" />
+        <Setter Property="FontFamily" Value="OpenSansSemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="DangerButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordRed}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="OpenSansSemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <!-- Entry Stile -->
+    <Style TargetType="Entry" x:Key="DiscordEntry">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBackgroundLighter}" />
+        <Setter Property="TextColor" Value="{StaticResource DiscordText}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource DiscordTextDarker}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="40" />
+    </Style>
+
+    <!-- Editor Stile -->
+    <Style TargetType="Editor" x:Key="DiscordEditor">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBackgroundLighter}" />
+        <Setter Property="TextColor" Value="{StaticResource DiscordText}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource DiscordTextDarker}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="AutoSize" Value="TextChanges" />
+    </Style>
+
+    <!-- Frame Stile -->
+    <Style TargetType="Frame" x:Key="CardFrame">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBackgroundDarker}" />
+        <Setter Property="BorderColor" Value="{StaticResource BorderColorDarker}" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <!-- ListView Stile -->
+    <Style TargetType="ListView" x:Key="DiscordListView">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBackground}" />
+        <Setter Property="SeparatorVisibility" Value="None" />
+        <Setter Property="HasUnevenRows" Value="True" />
+        <Setter Property="SelectionMode" Value="Single" />
+    </Style>
+
+    <!-- ContentPage Stil -->
+    <Style TargetType="ContentPage" x:Key="DiscordPage">
+        <Setter Property="BackgroundColor" Value="{StaticResource DiscordBackground}" />
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="DemonicBot.Views.ServersPage"
+    xmlns:viewmodels="clr-namespace:DemonicBot.ViewModels"
+    xmlns:models="clr-namespace:DemonicBot.Models"
+    Title="{Binding Title}"
+    Style="{StaticResource DiscordPage}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ServersViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Einstellungen" Command="{Binding GoToSettingsCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <!-- Header -->
+        <Label Text="Server auswählen" Style="{StaticResource HeaderLabel}" Margin="0,10,0,10" />
+
+        <!-- Server-Liste -->
+        <RefreshView Grid.Row="1" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsBusy}">
+            <CollectionView
+                ItemsSource="{Binding Servers}"
+                SelectedItem="{Binding SelectedServer}"
+                SelectionMode="Single">
+
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label 
+                            Text="Keine Server gefunden" 
+                            Style="{StaticResource TitleLabel}"
+                            HorizontalOptions="Center" />
+                        <Label 
+                            Text="Der Bot muss möglicherweise noch zu deinen Servern hinzugefügt werden."
+                            Style="{StaticResource SubtitleLabel}"
+                            HorizontalOptions="Center" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DiscordServer">
+                        <Frame Style="{StaticResource CardFrame}" Margin="0,5" Padding="15">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <!-- Server-Icon oder Initialbuchstabe -->
+                                <Frame 
+                                    HeightRequest="50" 
+                                    WidthRequest="50" 
+                                    CornerRadius="25" 
+                                    BackgroundColor="{StaticResource DiscordBlurple}"
+                                    Padding="0"
+                                    IsClippedToBounds="True">
+
+                                    <Grid>
+                                        <!-- Anzeige des Server-Icons, falls vorhanden -->
+                                        <Image 
+                                            Source="{Binding IconUrl}" 
+                                            Aspect="AspectFill"
+                                            IsVisible="{Binding IconUrl, Converter={StaticResource StringNotEmptyToBoolConverter}}" />
+
+                                        <!-- Anzeige des Initialbuchstabens, falls kein Icon vorhanden -->
+                                        <Label 
+                                            Text="{Binding InitialLetter}" 
+                                            TextColor="White"
+                                            FontSize="20"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            IsVisible="{Binding IconUrl, Converter={StaticResource StringEmptyToBoolConverter}}" />
+                                    </Grid>
+                                </Frame>
+
+                                <!-- Server-Name -->
+                                <Label 
+                                    Grid.Column="1" 
+                                    Text="{Binding DisplayName}" 
+                                    Style="{StaticResource TitleLabel}"
+                                    VerticalOptions="Center"
+                                    Margin="15,0,0,0" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Fehlermeldung -->
+        <Label 
+            Grid.Row="2" 
+            Text="{Binding ErrorMessage}" 
+            TextColor="{StaticResource DiscordRed}" 
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyToBoolConverter}}"
+            Margin="0,10,0,0" />
+    </Grid>
+</ContentPage>

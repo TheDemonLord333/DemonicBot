@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="DemonicBot.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:DemonicBot.Views"
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="{StaticResource DiscordBackground}">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource DiscordBackgroundDarker}" />
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource DiscordText}" />
+                <Setter Property="Shell.TitleColor" Value="{StaticResource DiscordTextBrighter}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource DiscordBackgroundDarker}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource DiscordText}" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource DiscordTextDarker}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource DiscordTextBrighter}" />
+            </Style>
+
+            <Style TargetType="ShellContent" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage" />
+
+</Shell>
