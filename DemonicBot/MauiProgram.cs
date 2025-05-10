@@ -22,12 +22,6 @@ public static class MauiProgram
             // Hier können weitere Handler-Konfigurationen hinzugefügt werden
         });
 
-        // Konverter im ResourceDictionary registrieren
-        Application.Current.Resources.Add("StringNotEmptyToBoolConverter", new StringNotEmptyToBoolConverter());
-        Application.Current.Resources.Add("StringEmptyToBoolConverter", new StringEmptyToBoolConverter());
-        Application.Current.Resources.Add("InvertedBoolConverter", new InvertedBoolConverter());
-        Application.Current.Resources.Add("CollectionCountToHeightConverter", new CollectionCountToHeightConverter());
-
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

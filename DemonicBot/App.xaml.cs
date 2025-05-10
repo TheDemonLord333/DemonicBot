@@ -1,6 +1,6 @@
 ﻿using DemonicBot.Services;
 using DemonicBot.Views;
-
+using DemonicBot.Converters;
 
 namespace DemonicBot;
 public partial class App : Application
@@ -8,6 +8,12 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        // Konverter im ResourceDictionary registrieren
+        Application.Current.Resources.Add("StringNotEmptyToBoolConverter", new StringNotEmptyToBoolConverter());
+        Application.Current.Resources.Add("StringEmptyToBoolConverter", new StringEmptyToBoolConverter());
+        Application.Current.Resources.Add("InvertedBoolConverter", new InvertedBoolConverter());
+        Application.Current.Resources.Add("CollectionCountToHeightConverter", new CollectionCountToHeightConverter());
 
         // Services registrieren
         DependencyService.Register<IApiService, ApiService>();
