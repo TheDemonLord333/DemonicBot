@@ -38,8 +38,19 @@ namespace DemonicBot.Services
             try
             {
                 // API-Einstellungen aus den gespeicherten Einstellungen abrufen
-                _apiUrl = await _settingsService.GetSettingAsync("ApiUrl");
-                _apiSecret = await _settingsService.GetSettingAsync("ApiSecret");
+                _apiUrl = await _settingsService.GetSettingAsync(SettingsKeys.API_URL_KEY);
+                _apiSecret = await _settingsService.GetSettingAsync(SettingsKeys.API_SECRET_KEY);
+
+                // Fallback to defaults if settings are empty
+                if (string.IsNullOrEmpty(_apiUrl))
+                {
+                    _apiUrl = SettingsKeys.DEFAULT_API_URL;
+                }
+
+                if (string.IsNullOrEmpty(_apiSecret))
+                {
+                    _apiSecret = SettingsKeys.DEFAULT_API_SECRET;
+                }
 
                 if (string.IsNullOrEmpty(_apiUrl) || string.IsNullOrEmpty(_apiSecret))
                 {

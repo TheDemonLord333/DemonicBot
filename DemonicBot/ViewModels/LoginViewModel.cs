@@ -75,7 +75,7 @@ namespace DemonicBot.ViewModels
                     return;
                 }
 
-                // Einstellungen speichern
+                // Einstellungen mit den korrekten Konstanten speichern
                 await SettingsService.SaveSettingAsync(SettingsKeys.API_URL_KEY, ApiUrl);
                 await SettingsService.SaveSettingAsync(SettingsKeys.API_SECRET_KEY, ApiSecret);
 
